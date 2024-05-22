@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myui_shayriapp/fourthpage.dart';
 
@@ -15,6 +16,15 @@ class Third_Page extends StatefulWidget {
 }
 
 class State_Third_Page extends State<Third_Page> {
+  PageController controller = PageController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller = PageController(initialPage: widget.particularindex);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,25 +38,38 @@ class State_Third_Page extends State<Third_Page> {
       body: Column(
         children: [
           SizedBox(height: 50),
-          Center(
-            child: Card(
-              elevation: 10,
-              shadowColor: Colors.pink,
-              child: Container(
-                width: 330,
-                height: 330,
-                color: Colors.pink[300],
-                child: Center(
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    "${widget.blankShyari[widget.particularindex]}",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 30),
+          Expanded(
+            child: PageView.builder(
+              controller: controller,
+              onPageChanged: (value) {
+                setState(() {
+                  widget.particularindex = value;
+                });
+              },
+              itemCount: widget.blankShyari.length,
+              itemBuilder: (context, index) {
+                return Center(
+                  child: Card(
+                    elevation: 10,
+                    shadowColor: Colors.pink,
+                    child: Container(
+                      width: 330,
+                      height: 330,
+                      color: Colors.pink[300],
+                      child: Center(
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          "${widget.blankShyari[widget.particularindex]}",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 30),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
           ),
           SizedBox(
@@ -83,9 +106,12 @@ class State_Third_Page extends State<Third_Page> {
                     children: [
                       IconButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return Fourth_Page(widget.shyariName , widget.blankShyari[widget.particularindex] );
-                            },));
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return Fourth_Page(widget.shyariName,
+                                    widget.blankShyari[widget.particularindex]);
+                              },
+                            ));
                           },
                           icon: Icon(
                             Icons.edit,

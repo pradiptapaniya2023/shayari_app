@@ -19,8 +19,6 @@ class Fourth_Page extends StatefulWidget {
   State<Fourth_Page> createState() => _Fourth_PageState();
 }
 
-
-
 class _Fourth_PageState extends State<Fourth_Page> {
   WidgetsToImageController controller = WidgetsToImageController();
   Uint8List? bytes;
